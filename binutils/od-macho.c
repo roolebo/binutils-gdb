@@ -1439,6 +1439,16 @@ dump_twolevel_hints (bfd *abfd, bfd_mach_o_twolevel_hints_command *cmd)
 }
 
 static void
+printf_version (uint32_t version)
+{
+  uint32_t maj, min, upd;
+  maj = (version >> 16) & 0xffff;
+  min = (version >> 8) & 0xff;
+  upd = version & 0xff;
+  printf ("%u.%u.%u", maj, min, upd);
+}
+
+static void
 dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
                    unsigned int idx, bfd_boolean verbose)
 {
@@ -1585,7 +1595,9 @@ dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
       {
         bfd_mach_o_version_min_command *ver = &cmd->command.version_min;
 
-        printf ("    %u.%u.%u\n", ver->rel, ver->maj, ver->min);
+        printf ("   os: ");
+        printf_version (ver->version);
+        printf ("\n");
       }
       break;
     case BFD_MACH_O_LC_SOURCE_VERSION:

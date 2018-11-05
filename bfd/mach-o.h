@@ -519,10 +519,8 @@ bfd_mach_o_dyld_info_command;
 
 typedef struct bfd_mach_o_version_min_command
 {
-  unsigned char rel;
-  unsigned char maj;
-  unsigned char min;
-  unsigned int reserved;
+  uint32_t version;
+  uint32_t reserved;
 }
 bfd_mach_o_version_min_command;
 

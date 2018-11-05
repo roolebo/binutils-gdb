@@ -1,3 +1,8 @@
+2018-11-06  Roman Bolshakov  <r.bolshakov@yadro.com>
+
+	* od-macho.c (printf_version): New.
+	(dump_load_command): Use it to print version.
+
 2018-11-06  H.J. Lu  <hongjiu.lu@intel.com>
 
 	* doc/binutils.texi: Document --enable-x86-feature and
