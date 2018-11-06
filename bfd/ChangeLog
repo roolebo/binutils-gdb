@@ -5,6 +5,7 @@
 	a few fields. Rename reserved to sdk.
 	* mach-o.c (bfd_mach_o_read_version_min): Don't split version into a
 	few fields. Rename reserved to sdk.
+	(bfd_mach_o_read_command): Handle LC_VERSION_MIN_TVOS.
 
 2018-11-06  Romain Margheriti  <lilrom13@gmail.com>
 

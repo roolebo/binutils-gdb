@@ -3,6 +3,7 @@
 
 	* mach-o/external.h (mach_o_version_min_command_external): Rename
 	reserved to sdk.
+	* mach-o/loader.h (BFD_MACH_O_LC_VERSION_MIN_TVOS): Define
 
 2018-11-06  Romain Margheriti  <lilrom13@gmail.com>
 
