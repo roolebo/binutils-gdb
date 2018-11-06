@@ -212,6 +212,7 @@ static const bfd_mach_o_xlat_name bfd_mach_o_load_command_name[] =
   { "version_min_tvos", BFD_MACH_O_LC_VERSION_MIN_TVOS},
   { "version_min_watchos", BFD_MACH_O_LC_VERSION_MIN_WATCHOS},
   { "note", BFD_MACH_O_LC_NOTE},
+  { "build_version", BFD_MACH_O_LC_BUILD_VERSION},
   { NULL, 0}
 };
 
@@ -232,7 +233,25 @@ static const bfd_mach_o_xlat_name bfd_mach_o_thread_x86_name[] =
   { "state_none", BFD_MACH_O_x86_THREAD_STATE_NONE},
   { NULL, 0 }
 };
-
+
+static const bfd_mach_o_xlat_name bfd_mach_o_platform_name[] =
+{
+  { "macos", BFD_MACH_O_PLATFORM_MACOS},
+  { "ios", BFD_MACH_O_PLATFORM_IOS},
+  { "tvos", BFD_MACH_O_PLATFORM_TVOS},
+  { "watchos", BFD_MACH_O_PLATFORM_WATCHOS},
+  { "bridgeos", BFD_MACH_O_PLATFORM_BRIDGEOS},
+  { NULL, 0 }
+};
+
+static const bfd_mach_o_xlat_name bfd_mach_o_tool_name[] =
+{
+  { "clang", BFD_MACH_O_TOOL_CLANG},
+  { "swift", BFD_MACH_O_TOOL_SWIFT},
+  { "ld", BFD_MACH_O_TOOL_LD},
+  { NULL, 0 }
+};
+
 static void
 bfd_mach_o_print_flags (const bfd_mach_o_xlat_name *table,
                         unsigned long val)
@@ -1452,6 +1471,53 @@ printf_version (uint32_t version)
 }
 
 static void
+dump_build_version (bfd *abfd, bfd_mach_o_load_command *cmd)
+{
+  const char *platform_name;
+  size_t tools_len, tools_offset;
+  bfd_mach_o_build_version_tool *tools, *tool;
+  bfd_mach_o_build_version_command *ver = &cmd->command.build_version;
+  uint32_t i;
+
+  platform_name = bfd_mach_o_get_name_or_null
+    (bfd_mach_o_platform_name, ver->platform);
+  if (platform_name == NULL)
+    printf ("   platform: 0x%08x\n", ver->platform);
+  else
+    printf ("   platform: %s\n", platform_name);
+  printf ("   os:       ");
+  printf_version (ver->minos);
+  printf ("\n   sdk:      ");
+  printf_version (ver->sdk);
+  printf ("\n   ntools:   %u\n", ver->ntools);
+
+  tools_len = sizeof (bfd_mach_o_build_version_tool) * ver->ntools;
+  tools_offset = cmd->offset + cmd->len - tools_len;
+
+  tools = xmalloc (tools_len);
+  if (bfd_seek (abfd, tools_offset, SEEK_SET) != 0
+      || bfd_bread (tools, tools_len, abfd) != tools_len) {
+    non_fatal (_("cannot read build tools"));
+    free (tools);
+    return;
+  }
+  for (i = 0, tool = tools; i < ver->ntools; i++, tool++)
+  {
+    const char * tool_name;
+    tool_name = bfd_mach_o_get_name_or_null
+      (bfd_mach_o_tool_name, tool->tool);
+    if (tool_name == NULL)
+      printf ("   tool:     0x%08x\n", tool->tool);
+    else
+      printf ("   tool:     %s\n", tool_name);
+    printf ("   version:  ");
+    printf_version (tool->version);
+    printf ("\n");
+  }
+  free (tools);
+}
+
+static void
 dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
                    unsigned int idx, bfd_boolean verbose)
 {
@@ -1674,6 +1740,9 @@ dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
 	printf ("\n");
         break;
       }
+    case BFD_MACH_O_LC_BUILD_VERSION:
+      dump_build_version (abfd, cmd);
+      break;
     default:
       break;
     }

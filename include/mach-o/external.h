@@ -352,6 +352,14 @@ struct mach_o_note_command_external
   unsigned char size[8];        /* Length of the note. */
 };
 
+struct mach_o_build_version_command_external
+{
+  unsigned char platform[4];    /* Target platform. */
+  unsigned char minos[4];       /* X.Y.Z is encoded in nibbles xxxx.yy.zz */
+  unsigned char sdk[4];         /* X.Y.Z is encoded in nibbles xxxx.yy.zz */
+  unsigned char ntools[4];      /* Number of tool entries following this. */
+};
+
 /* The LD_DATA_IN_CODE command use a linkedit_data_command that points to
    a table of entries.  */
 

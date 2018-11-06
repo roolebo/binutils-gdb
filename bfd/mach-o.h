@@ -113,6 +113,18 @@ bfd_mach_o_segment_command;
 #define BFD_MACH_O_PROT_WRITE   0x02
 #define BFD_MACH_O_PROT_EXECUTE 0x04
 
+/* Target platforms. */
+#define BFD_MACH_O_PLATFORM_MACOS    1
+#define BFD_MACH_O_PLATFORM_IOS      2
+#define BFD_MACH_O_PLATFORM_TVOS     3
+#define BFD_MACH_O_PLATFORM_WATCHOS  4
+#define BFD_MACH_O_PLATFORM_BRIDGEOS 5
+
+/* Build tools. */
+#define BFD_MACH_O_TOOL_CLANG 1
+#define BFD_MACH_O_TOOL_SWIFT 2
+#define BFD_MACH_O_TOOL_LD    3
+
 /* Expanded internal representation of a relocation entry.  */
 typedef struct bfd_mach_o_reloc_info
 {
@@ -557,6 +569,22 @@ typedef struct bfd_mach_o_note_command
 }
 bfd_mach_o_note_command;
 
+typedef struct bfd_mach_o_build_version_tool
+{
+  uint32_t tool;
+  uint32_t version;
+}
+bfd_mach_o_build_version_tool;
+
+typedef struct bfd_mach_o_build_version_command
+{
+  uint32_t platform;
+  uint32_t minos;
+  uint32_t sdk;
+  uint32_t ntools;
+}
+bfd_mach_o_build_version_command;
+
 typedef struct bfd_mach_o_load_command
 {
   /* Next command in the single linked list.  */
@@ -591,6 +619,7 @@ typedef struct bfd_mach_o_load_command
     bfd_mach_o_main_command main;
     bfd_mach_o_source_version_command source_version;
     bfd_mach_o_note_command note;
+    bfd_mach_o_build_version_command build_version;
   } command;
 }
 bfd_mach_o_load_command;

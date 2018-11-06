@@ -4693,6 +4693,22 @@ bfd_mach_o_read_note (bfd *abfd, bfd_mach_o_load_command *command)
 }
 
 static bfd_boolean
+bfd_mach_o_read_build_version (bfd *abfd, bfd_mach_o_load_command *command)
+{
+  bfd_mach_o_build_version_command *cmd = &command->command.build_version;
+  struct mach_o_build_version_command_external raw;
+
+  if (bfd_bread (&raw, sizeof (raw), abfd) != sizeof (raw))
+    return FALSE;
+
+  cmd->platform = bfd_get_32 (abfd, raw.platform);
+  cmd->minos = bfd_get_32 (abfd, raw.minos);
+  cmd->sdk = bfd_get_32 (abfd, raw.sdk);
+  cmd->ntools = bfd_get_32 (abfd, raw.ntools);
+  return TRUE;
+}
+
+static bfd_boolean
 bfd_mach_o_read_segment (bfd *abfd,
 			 bfd_mach_o_load_command *command,
 			 unsigned int wide)
@@ -4904,8 +4920,11 @@ bfd_mach_o_read_command (bfd *abfd, bfd_mach_o_load_command *command)
       if (!bfd_mach_o_read_note (abfd, command))
         return FALSE;
       break;
-    case BFD_MACH_O_LC_LINKER_OPTIONS:
     case BFD_MACH_O_LC_BUILD_VERSION:
+      if (!bfd_mach_o_read_build_version (abfd, command))
+        return FALSE;
+      break;
+    case BFD_MACH_O_LC_LINKER_OPTIONS:
       break;
     default:
       command->len = 0;
