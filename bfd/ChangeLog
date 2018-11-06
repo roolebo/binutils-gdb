@@ -3,9 +3,11 @@
 
 	* mach-o.h (bfd_mach_o_version_min_command): Don't split version into
 	a few fields. Rename reserved to sdk.
+	(struct bfd_mach_o_note_command): New.
 	* mach-o.c (bfd_mach_o_read_version_min): Don't split version into a
 	few fields. Rename reserved to sdk.
-	(bfd_mach_o_read_command): Handle LC_VERSION_MIN_TVOS.
+	(bfd_mach_o_read_command): Handle LC_VERSION_MIN_TVOS, LC_NOTE.
+	(bfd_mach_o_read_note): New.
 
 2018-11-06  Romain Margheriti  <lilrom13@gmail.com>
 

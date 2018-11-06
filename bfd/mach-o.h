@@ -549,6 +549,14 @@ typedef struct bfd_mach_o_source_version_command
 }
 bfd_mach_o_source_version_command;
 
+typedef struct bfd_mach_o_note_command
+{
+  char data_owner[16];
+  bfd_uint64_t offset;
+  bfd_uint64_t size;
+}
+bfd_mach_o_note_command;
+
 typedef struct bfd_mach_o_load_command
 {
   /* Next command in the single linked list.  */
@@ -582,6 +590,7 @@ typedef struct bfd_mach_o_load_command
     bfd_mach_o_fvmlib_command fvmlib;
     bfd_mach_o_main_command main;
     bfd_mach_o_source_version_command source_version;
+    bfd_mach_o_note_command note;
   } command;
 }
 bfd_mach_o_load_command;

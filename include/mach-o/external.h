@@ -345,6 +345,13 @@ struct mach_o_source_version_command_external
 				   and 24 bits for A.  */
 };
 
+struct mach_o_note_command_external
+{
+  unsigned char data_owner[16]; /* Owner name for this note. */
+  unsigned char offset[8];      /* File offset of the note. */
+  unsigned char size[8];        /* Length of the note. */
+};
+
 /* The LD_DATA_IN_CODE command use a linkedit_data_command that points to
    a table of entries.  */
 

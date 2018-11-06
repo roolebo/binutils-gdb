@@ -211,6 +211,7 @@ static const bfd_mach_o_xlat_name bfd_mach_o_load_command_name[] =
   { "linker_optimization_hint", BFD_MACH_O_LC_LINKER_OPTIMIZATION_HINT},
   { "version_min_tvos", BFD_MACH_O_LC_VERSION_MIN_TVOS},
   { "version_min_watchos", BFD_MACH_O_LC_VERSION_MIN_WATCHOS},
+  { "note", BFD_MACH_O_LC_NOTE},
   { NULL, 0}
 };
 
@@ -1658,6 +1659,18 @@ dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
         printf ("\n"
                 "   stack size:   ");
 	printf_uint64 (entry->stacksize);
+	printf ("\n");
+        break;
+      }
+    case BFD_MACH_O_LC_NOTE:
+      {
+        bfd_mach_o_note_command *note = &cmd->command.note;
+        printf ("   data owner: %.16s\n", note->data_owner);
+        printf ("   offset:     ");
+	printf_uint64 (note->offset);
+        printf ("\n"
+                "   size:       ");
+	printf_uint64 (note->size);
 	printf ("\n");
         break;
       }

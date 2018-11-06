@@ -3,7 +3,7 @@
 
 	* od-macho.c (printf_version): New.
 	(dump_load_command): Use it to print version. Print sdk version. Print
-	version info for watchOS and tvOS.
+	version info for watchOS and tvOS. Print LC_NOTE.
 
 2018-11-06  H.J. Lu  <hongjiu.lu@intel.com>
 

@@ -187,6 +187,7 @@ typedef enum bfd_mach_o_load_command_type
   BFD_MACH_O_LC_LINKER_OPTIMIZATION_HINT = 0x2e, /* Optimization hints.  */
   BFD_MACH_O_LC_VERSION_MIN_TVOS = 0x2f, /* Minimal tvOS version.  */
   BFD_MACH_O_LC_VERSION_MIN_WATCHOS = 0x30, /* Minimal WatchOS version.  */
+  BFD_MACH_O_LC_NOTE = 0x31, /* Region of arbitrary data. */
   BFD_MACH_O_LC_BUILD_VERSION = 0x32     /* Records linker, SDK, OS, and tools version used.  */
 }
 bfd_mach_o_load_command_type;

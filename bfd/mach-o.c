@@ -4678,6 +4678,21 @@ bfd_mach_o_read_source_version (bfd *abfd, bfd_mach_o_load_command *command)
 }
 
 static bfd_boolean
+bfd_mach_o_read_note (bfd *abfd, bfd_mach_o_load_command *command)
+{
+  bfd_mach_o_note_command *cmd = &command->command.note;
+  struct mach_o_note_command_external raw;
+
+  if (bfd_bread (&raw, sizeof (raw), abfd) != sizeof (raw))
+    return FALSE;
+
+  memcpy (cmd->data_owner, raw.data_owner, 16);
+  cmd->offset = bfd_get_64 (abfd, raw.offset);
+  cmd->size = bfd_get_64 (abfd, raw.size);
+  return TRUE;
+}
+
+static bfd_boolean
 bfd_mach_o_read_segment (bfd *abfd,
 			 bfd_mach_o_load_command *command,
 			 unsigned int wide)
@@ -4884,6 +4899,10 @@ bfd_mach_o_read_command (bfd *abfd, bfd_mach_o_load_command *command)
     case BFD_MACH_O_LC_SOURCE_VERSION:
       if (!bfd_mach_o_read_source_version (abfd, command))
 	return FALSE;
+      break;
+    case BFD_MACH_O_LC_NOTE:
+      if (!bfd_mach_o_read_note (abfd, command))
+        return FALSE;
       break;
     case BFD_MACH_O_LC_LINKER_OPTIONS:
     case BFD_MACH_O_LC_BUILD_VERSION:
