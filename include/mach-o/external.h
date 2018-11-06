@@ -308,7 +308,7 @@ struct mach_o_twolevel_hints_command_external
 struct mach_o_version_min_command_external
 {
   unsigned char version[4];
-  unsigned char reserved[4];
+  unsigned char sdk[4];
 };
 
 struct mach_o_encryption_info_command_external

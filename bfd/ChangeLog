@@ -1,9 +1,10 @@
 2018-11-06  Roman Bolshakov <r.bolshakov@yadro.com>
+	    Saagar Jha  <saagar@saagarjha.com>
 
 	* mach-o.h (bfd_mach_o_version_min_command): Don't split version into
-	a few fields.
+	a few fields. Rename reserved to sdk.
 	* mach-o.c (bfd_mach_o_read_version_min): Don't split version into a
-	few fields.
+	few fields. Rename reserved to sdk.
 
 2018-11-06  Romain Margheriti  <lilrom13@gmail.com>
 

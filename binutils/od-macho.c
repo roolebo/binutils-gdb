@@ -1597,6 +1597,8 @@ dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
 
         printf ("   os: ");
         printf_version (ver->version);
+        printf ("\n   sdk: ");
+        printf_version (ver->sdk);
         printf ("\n");
       }
       break;

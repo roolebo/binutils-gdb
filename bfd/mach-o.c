@@ -4603,7 +4603,7 @@ bfd_mach_o_read_version_min (bfd *abfd, bfd_mach_o_load_command *command)
     return FALSE;
 
   cmd->version = bfd_get_32 (abfd, raw.version);
-  cmd->reserved = bfd_get_32 (abfd, raw.reserved);
+  cmd->sdk = bfd_get_32 (abfd, raw.sdk);
   return TRUE;
 }
 

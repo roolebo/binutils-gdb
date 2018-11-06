@@ -1,7 +1,8 @@
 2018-11-06  Roman Bolshakov  <r.bolshakov@yadro.com>
+	    Saagar Jha  <saagar@saagarjha.com>
 
 	* od-macho.c (printf_version): New.
-	(dump_load_command): Use it to print version.
+	(dump_load_command): Use it to print version. Print sdk version.
 
 2018-11-06  H.J. Lu  <hongjiu.lu@intel.com>
 

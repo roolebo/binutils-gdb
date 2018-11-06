@@ -520,7 +520,7 @@ bfd_mach_o_dyld_info_command;
 typedef struct bfd_mach_o_version_min_command
 {
   uint32_t version;
-  uint32_t reserved;
+  uint32_t sdk;
 }
 bfd_mach_o_version_min_command;
 
