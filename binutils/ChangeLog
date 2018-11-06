@@ -2,7 +2,8 @@
 	    Saagar Jha  <saagar@saagarjha.com>
 
 	* od-macho.c (printf_version): New.
-	(dump_load_command): Use it to print version. Print sdk version.
+	(dump_load_command): Use it to print version. Print sdk version. Print
+	version info for watchOS.
 
 2018-11-06  H.J. Lu  <hongjiu.lu@intel.com>
 

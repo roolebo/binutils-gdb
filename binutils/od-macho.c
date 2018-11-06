@@ -209,6 +209,7 @@ static const bfd_mach_o_xlat_name bfd_mach_o_load_command_name[] =
   { "encryption_info_64", BFD_MACH_O_LC_ENCRYPTION_INFO_64},
   { "linker_options", BFD_MACH_O_LC_LINKER_OPTIONS},
   { "linker_optimization_hint", BFD_MACH_O_LC_LINKER_OPTIMIZATION_HINT},
+  { "version_min_watchos", BFD_MACH_O_LC_VERSION_MIN_WATCHOS},
   { NULL, 0}
 };
 
@@ -1592,6 +1593,7 @@ dump_load_command (bfd *abfd, bfd_mach_o_load_command *cmd,
       break;
     case BFD_MACH_O_LC_VERSION_MIN_MACOSX:
     case BFD_MACH_O_LC_VERSION_MIN_IPHONEOS:
+    case BFD_MACH_O_LC_VERSION_MIN_WATCHOS:
       {
         bfd_mach_o_version_min_command *ver = &cmd->command.version_min;
 
